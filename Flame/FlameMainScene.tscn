@@ -1,0 +1,63 @@
+[gd_scene load_steps=10 format=3 uid="uid://c6w1g1r3cny7d"]
+
+[ext_resource type="Material" uid="uid://u8hnkk6n28ui" path="res://Flame/FireParticleSystem.tres" id="2_rvjho"]
+[ext_resource type="Shader" path="res://Flame/InstanceMaterialShader.gdshader" id="4_1cpqk"]
+[ext_resource type="Script" path="res://Flame/Flame.gd" id="4_7hf4j"]
+[ext_resource type="Material" uid="uid://b0w5x8ios2q3q" path="res://Flame/FlameMaterial.tres" id="5_mjf34"]
+[ext_resource type="Texture2D" uid="uid://d3p6ep74snmq" path="res://Flame/NoiseTex.tres" id="5_ooxsh"]
+
+[sub_resource type="Gradient" id="Gradient_abd2h"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_5dovl"]
+gradient = SubResource("Gradient_abd2h")
+width = 30
+height = 30
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yfolf"]
+shader = ExtResource("4_1cpqk")
+shader_parameter/offset_speed_multiplier = 2.01
+shader_parameter/flame_color = Color(0.788235, 0.00392157, 0.964706, 1)
+shader_parameter/bounds_size = Vector2(100, 100)
+shader_parameter/origin = Vector2(166, 159)
+shader_parameter/core_flame_radius = 1.0
+shader_parameter/noise = ExtResource("5_ooxsh")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e3r1g"]
+shader = ExtResource("4_1cpqk")
+shader_parameter/offset_speed_multiplier = 1.9
+shader_parameter/flame_color = Color(0.0627451, 0.0235294, 0, 1)
+shader_parameter/bounds_size = Vector2(100, 100)
+shader_parameter/origin = Vector2(263, 219)
+shader_parameter/core_flame_radius = 1.0
+shader_parameter/noise = ExtResource("5_ooxsh")
+
+[node name="FlameMainScene" type="Node2D"]
+position = Vector2(331, 109)
+
+[node name="Flame" type="GPUParticles2D" parent="."]
+material = ExtResource("5_mjf34")
+amount = 200
+process_material = ExtResource("2_rvjho")
+texture = SubResource("GradientTexture2D_5dovl")
+script = ExtResource("4_7hf4j")
+
+[node name="Flame2" type="GPUParticles2D" parent="."]
+material = SubResource("ShaderMaterial_yfolf")
+position = Vector2(-165, 50)
+amount = 200
+process_material = ExtResource("2_rvjho")
+texture = SubResource("GradientTexture2D_5dovl")
+script = ExtResource("4_7hf4j")
+
+[node name="Flame3" type="GPUParticles2D" parent="."]
+material = SubResource("ShaderMaterial_e3r1g")
+position = Vector2(-68, 110)
+amount = 200
+process_material = ExtResource("2_rvjho")
+texture = SubResource("GradientTexture2D_5dovl")
+script = ExtResource("4_7hf4j")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(1.95, 1.95)
